@@ -27,13 +27,20 @@ class MyAccountManager(BaseUserManager):
 		return user
 
 
+# if , let's say, dad wants to add not only his fammily, but his father's family
+class Family(models.Model):
+	family_name = models.CharField(max_length=100)
+	slug = models.SlugField(null=True, blank=True, max_length=150, unique = True,verbose_name='Link', default=str(uuid.uuid4()).replace('-',''))
+
+
 class Account(AbstractBaseUser, PermissionsMixin):
 	email 					= models.EmailField(verbose_name="email", max_length=60, unique=True)
-	first_name				= models.CharField(max_length=30, default='', blank=True)
-	last_name				= models.CharField(max_length=30, default='', blank=True)
+	first_name				= models.CharField(max_length=50, blank=True)
+	last_name				= models.CharField(max_length=50, blank=True)
+	owner 					= models.ForeignKey(Family,null=True, on_delete=models.DO_NOTHING, verbose_name='Family', blank=True)
 	
-	date_joined				= models.DateTimeField(verbose_name='Дата регистрации', auto_now_add=True)
-	last_login				= models.DateTimeField(verbose_name='Последний вход', auto_now=True)
+	date_joined				= models.DateTimeField(verbose_name='Registration date', auto_now_add=True)
+	last_login				= models.DateTimeField(verbose_name='Last Login', auto_now=True)
 	is_admin				= models.BooleanField(default=False)
 	is_staff				= models.BooleanField(default=False)
 	is_superuser			= models.BooleanField(default=False)
@@ -44,3 +51,5 @@ class Account(AbstractBaseUser, PermissionsMixin):
 	def __str__(self):
 		return self.email
 	
+
+
