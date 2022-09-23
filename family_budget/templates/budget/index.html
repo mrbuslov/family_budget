@@ -4,6 +4,7 @@
 
 {% block content %}
     <h1 style="text-align: center;">Here are your budgets, <a href="{% url 'account:profile' %}">{{request.user.get_username_from_email}}</a></h1>
+    <p style="text-align: center; font-size:18px;">Let's create one more <a href="{% url 'family_budget:add_budget' %}">budget +</a></p>
     <div class="budget_items_field">
         {% for budget in budgets %}
             <a href="{% url 'family_budget:budget' budget.slug %}" class="budget_item">

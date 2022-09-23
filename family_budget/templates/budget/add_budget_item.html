@@ -1,0 +1,24 @@
+{% extends 'others/base.html' %}
+{% load static %}
+
+
+{% block title %}Add Item{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/budget.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1 style="text-align: center;">Let's add some income and expenses</h1>
+    <div style="margin: auto; display: table;">
+        <form action="{% url 'family_budget:add_budget_item' %}" style="display: inline-block;" method="post">
+            {% csrf_token %}
+            <p class="add_budget_field">Name: {{form.name}}</p>
+            <p class="add_budget_field">Money amount: {{form.price}} {{form.currency}}</p>
+            <p class="add_budget_field add_budget_field_desc">Description: {{form.description}}</p>
+            <p class="add_budget_field">Choose one of Your budgets: {{form.budget}}</p>
+            <p class="add_budget_field">Choose category: {{form.category}}</p>
+
+            <input type="submit" value="Add" class="add_budget_field_submit">
+        </form>
+    </div>
+{% endblock %}

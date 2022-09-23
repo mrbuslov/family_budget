@@ -55,8 +55,8 @@ class BudgetItems(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Category')
     
     CURRENCY_CHOICES = (
-        ('$', 'Dollar'),
-        ('€', 'Euro'),
+        ('$', '$'),
+        ('€', '€'),
     )
     currency = models.CharField(max_length=20, choices=CURRENCY_CHOICES, default='usd')
 

@@ -39,6 +39,14 @@ ul{
     align-items: center;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
 
 
 
@@ -70,6 +78,7 @@ ul{
     color: initial;
     display: flex;
     flex-direction: column;
+    width: auto;
 }
 .budget_item_name{
     display: block;
@@ -89,3 +98,5 @@ ul{
 .budget_item_price{
     text-align: right;
 }
+
+

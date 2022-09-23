@@ -1,28 +1,48 @@
 {% extends 'others/base.html' %}
 {% load static %}
-{% load i18n %}
 
-{% block title %}{{budget.name}}{% endblock %}
+{% block title %}{{budget.name}} from {{budget.owner.get_username_from_email}}{% endblock %}
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/budget.css' %}">
 {% endblock %}
 
 {% block content %}
-    <h1>{{budget.name}}</h1>
-    <p>Owner: {{budget.owner.get_username_from_email}}</p>
-    <p>Description: {{budget.description}}</p>
 
+    <h1 class="budget_name">{{budget.name}}</h1>
+    <p class="budget_details">Owner: {{budget.owner.get_username_from_email}}</p>
+    <p class="budget_details">Description: {{budget.description}}</p>
 
-    {% if categories %}
-        <h2>Categories:</h2>
-        <div class="tab">
-        {% for category in categories %}
-            <button class="tablinks" onclick="openBudgetItem(event, '{{category}}')">
-                <h3>{{category}}</h3>
-            </button>
-        {% endfor %}
-        </div>
-    {% endif %}
+    <h3 class="add_new_income_btn">Add new income/expense +</h3>
+    <div class="budgetNewAddForm">
+        <form action="{% url 'family_budget:add_budget_item' %}" style="display: inline-block;" method="post">
+            {% csrf_token %}
+            <p class="add_budget_field">Name: {{form.name}}</p>
+            <p class="add_budget_field">Money amount: {{form.price}} {{form.currency}}</p>
+            <p class="add_budget_field add_budget_field_desc">Description: {{form.description}}</p>
+            <!-- Make budget FK same as this page's -->
+            <input name="budget" type="hidden" value="{{budget.id}}"> 
+            <p class="add_budget_field">Choose category: {{form.category}}</p>
+
+            <input type="submit" value="Add" class="add_budget_field_submit">
+        </form>
+    </div>
+
+    <h2 style="margin: 0;">Categories:</h2>
+    <form action="{% url 'family_budget:add_category' %}" method="post">
+        {% csrf_token %}
+        <p class="add_category_field">Add category: {{category_form.name}}</p>
+        <!-- Make budget FK same as this page's -->
+        <input name="budget" type="hidden" value="{{budget.id}}"> 
+        <input type="submit" value="Add" class="add_category_field_submit">
+    </form>
+
+    <div class="tab">
+    {% for category in categories %}
+        <button class="tablinks" onclick="openBudgetItem(event, '{{category}}')">
+            <h3>{{category}}</h3>
+        </button>
+    {% endfor %}
+    </div>
 
 
 
@@ -42,6 +62,8 @@
                             {% endif %}
                             <span class="budget_item_published">{{budget_item.added|date:'d M'}}</span>
                         </div>
+                        <span class="delete_budget_item">x</span>
+                        <input type="hidden" value="{{budget_item.id}}" class="delete_budget_item_id">
                     </div>
                 {% endif %}
             {% endfor %}
@@ -53,31 +75,3 @@
 
 {% endblock %}
 
-
-
-{% block scripts %}
-
-
-<script>
-    function openBudgetItem(evt, budgetItemName) {
-    // Declare all variables
-    var i, tabcontent, tablinks;
-
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(budgetItemName).style.display = "block";
-    evt.currentTarget.className += " active";
-    }
-</script>
-{% endblock %}
