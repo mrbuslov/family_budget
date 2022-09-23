@@ -3,12 +3,11 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 import uuid
 
 class MyAccountManager(BaseUserManager):
-	def create_user(self, email, password=None, phone_number=None):
+	def create_user(self, email, password=None):
 		if not email: raise ValueError('Enter email')
 
 		user = self.model(
 			email=self.normalize_email(email),
-			phone_number=phone_number,
 		)
 
 		user.set_password(password)
@@ -37,7 +36,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
 	email 					= models.EmailField(verbose_name="email", max_length=60, unique=True)
 	first_name				= models.CharField(max_length=50, blank=True)
 	last_name				= models.CharField(max_length=50, blank=True)
-	owner 					= models.ForeignKey(Family,null=True, on_delete=models.DO_NOTHING, verbose_name='Family', blank=True)
+	member 					= models.ForeignKey(Family,verbose_name='Family', on_delete=models.DO_NOTHING, null=True, blank=True)
 	
 	date_joined				= models.DateTimeField(verbose_name='Registration date', auto_now_add=True)
 	last_login				= models.DateTimeField(verbose_name='Last Login', auto_now=True)
@@ -51,5 +50,5 @@ class Account(AbstractBaseUser, PermissionsMixin):
 	def __str__(self):
 		return self.email
 	
-
-
+	def get_username(self):
+		return self.email.split('@')[0]

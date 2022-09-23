@@ -1,0 +1,10 @@
+{% extends 'others/base.html' %}
+
+{% block title %}Main Page{% endblock %}
+
+{% block content %}
+    <h1>Here are your budgets, {{request.user.get_username}}</h1>
+    {% for budget in budgets %}
+        <p><a href="{% url 'family_budget:budget' budget.slug %}">{{budget.name}}</a></p>
+    {% endfor %}
+{% endblock %}

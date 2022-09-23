@@ -1,0 +1,38 @@
+{% load static %}  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>{% block title %}{% endblock %}</title>  
+
+  {% block head %}{% endblock %}
+  
+  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet">
+  {% block styles %}{% endblock %}
+  <!-- <link rel="stylesheet" media="(max-width: 1367px)" href="{% static 'css/style_adaptive.css' %}"> -->
+</head>
+<body>
+    {% if request.user.is_authenticated %}
+    <div class="header">
+        
+    </div>
+    {% endif %}
+
+    <div class="main">
+        {% if request.user.is_authenticated %}
+            {% block content %}{% endblock %}
+        {% else %}
+            <h1>To see Your's family budget, please, <a href="{% url 'account:login' %}">log in</a></h1>
+        {% endif %}
+    </div>
+
+
+</body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+  <!-- <script src="{% static 'js/script_adaptive.js' %}"></script> -->
+  {% block scripts %}{% endblock %}
+</html>

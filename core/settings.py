@@ -10,11 +10,16 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True
 ALLOWED_HOSTS = ['*']
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'family_budget_app/static'),
-)
+STATIC_ROOT = os.path.join(BASE_DIR, 'family_budget/static')
+# STATICFILES_DIRS = (
+#   os.path.join(BASE_DIR, 'family_budget/static'),
+# )
 SITE_ID = 1
 AUTH_USER_MODEL = 'account.Account'
+
+DEBUG_TOOLBAR_CONFIG = {'JQUERY_URL': r"/static/js/jQuery-3.6.0.js"}
+INTERNAL_IPS = ('127.0.0.1', ) # Debugtoolbar будет отображаться только на указанном вами IP-адресе
+
 
 
 INSTALLED_APPS = [
@@ -24,6 +29,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'debug_toolbar', # for debugging
+
+    'account',
+    'family_budget',
 ]
 
 MIDDLEWARE = [
@@ -34,6 +43,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware', # для отладки
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -41,7 +51,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'family_budget/templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

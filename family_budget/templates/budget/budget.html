@@ -1,0 +1,9 @@
+{% extends 'others/base.html' %}
+
+{% block title %}{{budget.name}}{% endblock %}
+
+{% block content %}
+    <h1>{{budget.name}}</h1>
+    <p>Owner: {{budget.owner.get_username}}</p>
+    <p>Description: {{budget.description}}</p>
+{% endblock %}
