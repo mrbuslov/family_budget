@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/registration.css' %}" type="text/css" rel="stylesheet">
+</head>
+<body>
+    
+
+
+{% block content %}
+    <div class="box"> 
+        <h1 class="login_header">Sing up</h1>
+        <form method="POST" action="{% url 'account:registration' %}" id="registrationForm">
+            {% csrf_token %}
+                <div class="input_textbox">
+                    <input type="email" name="email" required id="email" placeholder="Email" style="margin-bottom: 0;"><br>
+                </div>	
+                <br>
+                <div class="input_textbox">
+                    <input type="password" id="password" name="password" required placeholder="Password"><br>
+                </div>		    
+                <button type="submit" class="button">
+                    <span class="button_text">Sign up</span>
+                </button>
+                <p class="go_to_register"><a href="{% url 'account:login' %}">Log in</a></p>
+        </form>
+    </div>
+
+{% endblock %}

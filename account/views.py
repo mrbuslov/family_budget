@@ -24,7 +24,8 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 if 'next' in request.POST: return redirect(request.POST.get('next'))
-                return redirect('account:profile')
+                # return redirect('account:profile')
+                return redirect('family_budget:index')
             else:  
                 return render(request, 'account/login.html')
         else:  
@@ -49,7 +50,9 @@ def registration(request):
                 if 'next' in request.POST: return redirect(request.POST.get('next'))
                 return redirect('family_budget:index')
                 
-        return register_user(email, password)
+        user = register_user(email, password)
+        login(request, user)
+        return render(request, 'account/registration_success.html', {'email':email})
     else:
         return render(request, 'account/registration.html')
 
@@ -62,11 +65,10 @@ def profile(request):
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, instance=account)
         if form.is_valid():
-            post = form.save(commit=False)    
-            post.save()
+            form.save()    
         return redirect('account:profile')
 
     
     form = ProfileEditForm(instance=account)
-    return render(request, 'account/profile.html', {'form':form, 'account':account,})
+    return render(request, 'account/profile.html', {'form':form,})
     

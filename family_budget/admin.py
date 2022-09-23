@@ -10,11 +10,18 @@ class BudgetAdmin(admin.ModelAdmin):
     readonly_fields = ('slug',)
 
     class Meta:
-        model = Account
+        model = Budget
 
+class BudgetItemsAdmin(admin.ModelAdmin): 
+    list_display = ('name', 'price')
+    search_fields = ('name',)
+    ordering=('name',)
+    
 
+    class Meta:
+        model = BudgetItems
 
 
 admin.site.register(Budget, BudgetAdmin)
 admin.site.register(Category)
-admin.site.register(BudgetItems)
+admin.site.register(BudgetItems, BudgetItemsAdmin)

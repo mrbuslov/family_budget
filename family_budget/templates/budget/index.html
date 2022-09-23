@@ -3,8 +3,15 @@
 {% block title %}Main Page{% endblock %}
 
 {% block content %}
-    <h1>Here are your budgets, {{request.user.get_username}}</h1>
-    {% for budget in budgets %}
-        <p><a href="{% url 'family_budget:budget' budget.slug %}">{{budget.name}}</a></p>
-    {% endfor %}
+    <h1 style="text-align: center;">Here are your budgets, <a href="{% url 'account:profile' %}">{{request.user.get_username_from_email}}</a></h1>
+    <div class="budget_items_field">
+        {% for budget in budgets %}
+            <a href="{% url 'family_budget:budget' budget.slug %}" class="budget_item">
+                <span class="budget_item_name">{{budget.name}}</span>
+                <span class="budget_item_description">{{budget.description}}</span>
+                <span class="budget_item_price price_pos">Income: <strong>{{budget.get_total_money_movement.0}}</strong></span>
+                <span class="budget_item_price price_neg">Expences: <strong>{{budget.get_total_money_movement.1}}</strong></span>
+            </a>
+        {% endfor %}
+    </div>
 {% endblock %}

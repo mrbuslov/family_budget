@@ -5,7 +5,8 @@ from .models import Account
 
 
 
-def register_user(email, password, request):
+def register_user(email, password):
     user = Account.objects.create_user(password=password, email=email.lower())
     user.save()
-    return render(request, 'account/registration_success.html', {'email':email})
+    authenticate(email=email, password=password)
+    return user

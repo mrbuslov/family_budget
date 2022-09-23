@@ -50,5 +50,5 @@ class Account(AbstractBaseUser, PermissionsMixin):
 	def __str__(self):
 		return self.email
 	
-	def get_username(self):
+	def get_username_from_email(self):
 		return self.email.split('@')[0]

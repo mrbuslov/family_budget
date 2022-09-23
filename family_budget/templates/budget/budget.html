@@ -1,9 +1,83 @@
 {% extends 'others/base.html' %}
+{% load static %}
+{% load i18n %}
 
 {% block title %}{{budget.name}}{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/budget.css' %}">
+{% endblock %}
 
 {% block content %}
     <h1>{{budget.name}}</h1>
-    <p>Owner: {{budget.owner.get_username}}</p>
+    <p>Owner: {{budget.owner.get_username_from_email}}</p>
     <p>Description: {{budget.description}}</p>
+
+
+    {% if categories %}
+        <h2>Categories:</h2>
+        <div class="tab">
+        {% for category in categories %}
+            <button class="tablinks" onclick="openBudgetItem(event, '{{category}}')">
+                <h3>{{category}}</h3>
+            </button>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+
+
+    {% if categories %}
+        {% for category in categories %}
+        <div id="{{category}}" class="tabcontent">
+            {% for budget_item in budget_items %}
+                {% if budget_item.category == category %}
+                    <div class="budget_item">
+                        <span class="budget_item_name">{{budget_item.name}}</span>
+                        <span class="budget_item_description">{{budget_item.description}}</span>
+                        <div class="budget_item_others">
+                            {% if budget_item.price <= 0 %}
+                                <span class="budget_item_price price_neg">{{budget_item.price}} {{budget_item.currency}}</span>
+                            {% else %}
+                                <span class="budget_item_price price_pos">{{budget_item.price}} {{budget_item.currency}}</span>
+                            {% endif %}
+                            <span class="budget_item_published">{{budget_item.added|date:'d M'}}</span>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    {% endif %}
+
+
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+
+<script>
+    function openBudgetItem(evt, budgetItemName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(budgetItemName).style.display = "block";
+    evt.currentTarget.className += " active";
+    }
+</script>
 {% endblock %}

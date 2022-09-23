@@ -1,0 +1,31 @@
+{% extends 'others/base.html' %} 
+{% load static %}
+
+{% block title %}Your profile{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock %}
+
+{% block content %} 
+    <h1 class='profile_header'>Your profile, {{request.user.get_username_from_email}}</h1>
+
+    <form method="post" action="{% url 'account:profile' %}" enctype="multipart/form-data"> 
+        <div class="profile_data">
+            {% csrf_token %}
+            <div class="user_data">
+                <div class="user_data_labels">
+                    <p>Email:</p>
+                    <p>Name:</p>
+                    <p>Surname:</p>
+                </div>
+                <div class="user_data_fields">
+                    <p class="profile_email">{{request.user.email}}</p>
+                    <p>{{form.first_name}}</p>
+                    <p>{{form.last_name}}</p>
+                </div>
+            </div>
+        </div>
+        <input type="submit" id="profile_submit" value='Save'> 
+        <p style="text-align: center;margin-bottom: 50px"><a href="{% url 'account:logout' %}">Logout</a></p>
+    </form>
+{% endblock %}  

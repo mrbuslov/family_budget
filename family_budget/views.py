@@ -1,6 +1,7 @@
+from unicodedata import category
 from django.shortcuts import render, redirect
 
-from family_budget.models import Budget
+from family_budget.models import Budget, BudgetItems, Category
 
 
 
@@ -17,6 +18,13 @@ def index(request):
 def budget(request, slug):
     if Budget.objects.filter(slug=slug).exists():
         budget = Budget.objects.get(slug=slug)
-        return render(request, 'budget/budget.html', {'budget':budget})
+        categories = Category.objects.filter(budget=budget)
+        budget_items = BudgetItems.objects.filter(budget=budget).order_by('category')
+        context = {
+            'budget':budget,
+            'categories':categories,
+            'budget_items': budget_items,
+        }
+        return render(request, 'budget/budget.html', context)
     else:
         return redirect('family_budget:index')

@@ -5,6 +5,12 @@
 *{
     font-family: 'Rubic' !important;
 }
+:root {
+    --background-color: #b5aa72;
+    --background-color-hover: #999166;
+    --button-color: #77ab7a;
+    --border: #898989;
+}
 body {
     margin: 0;
     padding: 0;
@@ -20,4 +26,66 @@ a{
 ul{
     margin: 0;
     padding-top: 5px;
+}
+.main{
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.user_not_login_greeting{
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+/* ------------------ INDEX ----------------------------------------- */
+
+.price_pos{
+  color: blueviolet;
+}
+.price_neg{
+  color: rgb(239, 80, 80);
+}
+
+
+.budget_items_field{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.budget_item{
+    width: 200px;
+    background: #f0f0f0;
+    border: var(--border);
+    padding: 5px;
+    border-radius: 5px;
+    min-height: 50px;
+    margin: 0 20px;
+    color: initial;
+    display: flex;
+    flex-direction: column;
+}
+.budget_item_name{
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+.budget_item_description{
+    margin: 7px;
+    display: block;
+    font-size: 13px;
+    color: #898989;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.budget_item_price{
+    text-align: right;
 }

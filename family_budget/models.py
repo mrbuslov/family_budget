@@ -19,6 +19,16 @@ class Budget(models.Model):
         verbose_name_plural='Budgets'
         verbose_name= 'Budget'
         ordering=['name']
+
+
+    def get_total_money_movement(self):
+        income = 0
+        expense = 0
+        for budget_item in BudgetItems.objects.filter(budget=self):
+            if budget_item.price > 0: income += budget_item.price
+            else: expense += budget_item.price
+        return [income, expense]
+
     
 
 
@@ -45,13 +55,13 @@ class BudgetItems(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Category')
     
     CURRENCY_CHOICES = (
-        ('usd', 'Dollar'),
-        ('euro', 'Euro'),
+        ('$', 'Dollar'),
+        ('€', 'Euro'),
     )
     currency = models.CharField(max_length=20, choices=CURRENCY_CHOICES, default='usd')
 
     def __str__(self):
-        return f'{self.name} - {self.price}'
+        return self.name
 
     class Meta:
         verbose_name_plural='Budget Items'

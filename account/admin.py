@@ -16,7 +16,7 @@ class AccountAdmin(UserAdmin):
         ('Others', {'fields': ('date_joined','last_login', 'is_admin','is_staff', 'is_superuser', 'groups', 'user_permissions',)}),
     )
     
-    # readonly_fields = ()
+    readonly_fields = ('date_joined','last_login')
 
     class Meta:
         model = Account
