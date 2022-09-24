@@ -7,6 +7,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('account.urls', namespace='account')),
     path('',include('family_budget.urls', namespace='autostop')),
+    path('api/', include('api.urls')),
+    path('api-auth/', include('rest_framework.urls')), # add button Log in into API
 ]
 
 

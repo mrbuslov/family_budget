@@ -33,7 +33,19 @@ INSTALLED_APPS = [
 
     'account',
     'family_budget',
+    
+    'rest_framework', # for REST API
+    'rest_framework.authtoken',
+    'api.apps.ApiConfig',
 ]
+
+# python manage.py drf_create_token user
+# Generated token 6429bc64b55fae3d62c5c942c03a64f17bd23ec6 for user dad@gmail.com
+REST_FRAMEWORK = {
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.TokenAuthentication',
+    # ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
