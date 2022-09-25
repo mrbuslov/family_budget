@@ -28,4 +28,5 @@ Please use Docker for orchestration (docker-compose).
 
 # Docker
 docker build .
+
 docker-compose up
