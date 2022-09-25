@@ -1,0 +1,106 @@
+[
+{
+    "model": "family_budget.budget",
+    "pk": 1,
+    "fields": {
+        "name": "Budget 1",
+        "slug": "b15b56abdcc147d68d473dac4d7a1cff",
+        "description": "Budget 1 Budget 1 Budget 1",
+        "owner": 1,
+        "added": "2022-09-25T08:49:17.484Z"
+    }
+},
+{
+    "model": "family_budget.budget",
+    "pk": 2,
+    "fields": {
+        "name": "Budget 2",
+        "slug": "d32cf034e4fd4c099027b4692d90758a",
+        "description": "Budget 2 Budget 2 Budget 2",
+        "owner": 1,
+        "added": "2022-09-25T08:49:17.484Z"
+    }
+},
+{
+    "model": "family_budget.budget",
+    "pk": 3,
+    "fields": {
+        "name": "Budget 3",
+        "slug": "cc9a29a6fb79404b81985ba3323f3d75",
+        "description": "Budget 3 Budget 3",
+        "owner": 1,
+        "added": "2022-09-25T08:49:17.484Z"
+    }
+},
+{
+    "model": "family_budget.category",
+    "pk": 1,
+    "fields": {
+        "name": "Health",
+        "budget": 1
+    }
+},
+{
+    "model": "family_budget.category",
+    "pk": 2,
+    "fields": {
+        "name": "Food",
+        "budget": 1
+    }
+},
+{
+    "model": "family_budget.category",
+    "pk": 3,
+    "fields": {
+        "name": "Transport",
+        "budget": 1
+    }
+},
+{
+    "model": "family_budget.category",
+    "pk": 4,
+    "fields": {
+        "name": "Categ 1",
+        "budget": 2
+    }
+},
+{
+    "model": "family_budget.budgetitems",
+    "pk": 3,
+    "fields": {
+        "name": "Health 1",
+        "price": "456.00",
+        "description": "Health description",
+        "added": "2022-09-23T06:19:47.685Z",
+        "budget": 1,
+        "category": 1,
+        "currency": "$"
+    }
+},
+{
+    "model": "family_budget.budgetitems",
+    "pk": 5,
+    "fields": {
+        "name": "Food 3",
+        "price": "55.00",
+        "description": "Food 3 Food 3",
+        "added": "2022-09-23T13:01:34.684Z",
+        "budget": 1,
+        "category": 2,
+        "currency": "$"
+    }
+},
+{
+    "model": "family_budget.budgetitems",
+    "pk": 7,
+    "fields": {
+        "name": "Transport 1",
+        "price": "200.00",
+        "description": "Transport 1",
+        "added": "2022-09-23T14:36:11.032Z",
+        "budget": 1,
+        "category": 3,
+        "currency": "$"
+    }
+}
+]
