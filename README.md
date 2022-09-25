@@ -26,7 +26,10 @@ Please use Docker for orchestration (docker-compose).
 
 4. When running not through a docker container, I advise you to make a virtual environment and install all dependencies from the requirements.txt file.
 
+5. I used the standard sqlite3 instead of PostgreSQL. If necessary, I can switch to the second one.
+
 # Docker
 docker build .
 
 docker-compose up
+
