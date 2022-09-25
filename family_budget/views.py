@@ -6,7 +6,8 @@ from django.http import HttpResponseRedirect
 from family_budget.models import Budget, BudgetItems, Category
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from .filters import BudgetFilter
 
 
 
@@ -14,7 +15,25 @@ def index(request):
     if request.user.is_authenticated:
         # budgets = Budget.objects.filter(owner=request.user)
         budgets = Budget.objects.select_related("owner").all()
-        return render(request, 'budget/index.html', {'budgets':budgets})
+
+        myFilter = BudgetFilter(request.GET, queryset=budgets, user=request.user)
+        paginator = Paginator(myFilter.qs, 2)
+
+        if 'page' in request.GET:
+            page_num = request.GET['page']
+        else:
+            page_num = 1
+        page = paginator.get_page(page_num)
+        response = paginator.page(page_num)
+    
+
+        context = {
+            'budgets':response,
+            'response':response,
+            'myFilter':myFilter,
+            'page':page,
+        }
+        return render(request, 'budget/index.html', context)
     else:
         return render(request, 'budget/index.html')
 

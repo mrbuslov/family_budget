@@ -10,6 +10,7 @@ class Budget(models.Model):
     slug = models.SlugField(null=True, blank=True, max_length=150, unique = True,verbose_name='Link', default=str(uuid.uuid4()).replace('-',''))
     description = models.TextField(max_length=5500, null=True, blank=True, verbose_name='Description') 
     owner = models.ForeignKey(Account,null=True, on_delete=models.CASCADE, verbose_name='Owner', blank=True, related_name='budgets_owner')
+    added = models.DateTimeField(auto_now_add=True, verbose_name='Added ad' )
 
     def __str__(self):
         return self.name
@@ -50,7 +51,7 @@ class BudgetItems(models.Model):
     name = models.CharField(max_length=2000, null=True, blank=True, verbose_name='Name')
     price = models.DecimalField(verbose_name='Price', decimal_places=2, max_digits=20)
     description = models.TextField(max_length=5500, null=True, blank=True, verbose_name='Description') 
-    added = models.DateTimeField(auto_now_add=True, verbose_name='Added ad' )
+    added = models.DateTimeField(auto_now_add=True, verbose_name='Added at' )
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE, verbose_name='Budget', related_name='budget_items_budget')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Category', related_name='budget_items_category')
     

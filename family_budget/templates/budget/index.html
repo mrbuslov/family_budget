@@ -3,16 +3,50 @@
 {% block title %}Main Page{% endblock %}
 
 {% block content %}
-    <h1 style="text-align: center;">Here are your budgets, <a href="{% url 'account:profile' %}">{{request.user.get_username_from_email}}</a></h1>
-    <p style="text-align: center; font-size:18px;">Let's create one more <a href="{% url 'family_budget:add_budget' %}">budget +</a></p>
-    <div class="budget_items_field">
-        {% for budget in budgets %}
-            <a href="{% url 'family_budget:budget' budget.slug %}" class="budget_item">
-                <span class="budget_item_name">{{budget.name}}</span>
-                <span class="budget_item_description">{{budget.description}}</span>
-                <span class="budget_item_price price_pos">Income: <strong>{{budget.get_total_money_movement.0}}</strong></span>
-                <span class="budget_item_price price_neg">Expences: <strong>{{budget.get_total_money_movement.1}}</strong></span>
-            </a>
-        {% endfor %}
+
+    <style>
+        .main{
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+
+    <form action="{% url 'family_budget:index' %}" class="index_filters">
+        <span>
+            <strong>Choose date:</strong> {{myFilter.form.date}}
+        </span>
+        <span>
+            <strong>Enter name/description</strong> {{myFilter.form.title_content}}
+        </span>
+
+        <input type="submit" value="Search" class="filter_submit">
+    </form>
+
+    <div class="index_budgets">
+        <h1 style="text-align: center;">Here are your budgets, <a href="{% url 'account:profile' %}">{{request.user.get_username_from_email}}</a></h1>
+        <p style="text-align: center; font-size:18px;">Let's create one more <a href="{% url 'family_budget:add_budget' %}">budget +</a></p>
+        <div class="budget_items_field">
+            {% for budget in budgets %}
+                <a href="{% url 'family_budget:budget' budget.slug %}" class="budget_item">
+                    <span class="budget_item_name">{{budget.name}}</span>
+                    <span class="budget_item_description">{{budget.description}}</span>
+                    <span class="budget_item_price price_pos">Income: <strong>{{budget.get_total_money_movement.0}}</strong></span>
+                    <span class="budget_item_price price_neg">Expences: <strong>{{budget.get_total_money_movement.1}}</strong></span>
+                </a>
+            {% endfor %}
+        </div>
+
+        {% if page.paginator.num_pages != 1 %}
+            <div style="text-align: center; font-size: 17px; margin-top: 30px;">
+                {% if page.has_previous %}
+                    <a href="?search_product={{search_product}}&page={{ page.previous_page_number }}"><</a>
+                {% endif %}
+            
+                {% if page.has_next %}
+                    <span class="this_page"><strong>{{page.number}}</strong></span> from <strong>{{page.paginator.num_pages}}</strong>
+                    <a href="?search_product={{search_product}}&page={{ page.next_page_number }}">></a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
