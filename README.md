@@ -1,5 +1,5 @@
 # family_budget
-This projects is a test task
+This project is made using REST API Django.
 
 # Task
 1.	Description
